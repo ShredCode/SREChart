@@ -1,0 +1,34 @@
+package parse
+
+DOCUMENT <- entries:ENTRY* EOF {
+	return newFlows(entries)
+}
+
+ENTRY <- start:START NL options:OPTIONS+ {
+	return newFlow(start, end, options)
+}
+
+HEADSTATE <- SP SIGIL SP
+POSTSTATE <- sig:SIGIL SP {
+  return sig, nil
+}
+
+SIGIL <- sig:("*" / "!") {
+  return newState(sig)
+}
+
+END <- CHAR+ (":" CHAR+)* {
+  return string(c.text), nil
+}
+
+START <- CHAR+ {
+	return string(c.text), nil
+}
+
+CHAR <- [A-Za-z']
+
+_ "ignored whitespace" <- [ \n\t\r]*
+SP "significant whitespace" <- " "
+NL "newline" <- "\n"
+
+EOF <- !.
