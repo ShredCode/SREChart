@@ -1,0 +1,13 @@
+FlowName
+Start                InitialStage
+Options
+    Name
+    Decision
+End                  EndStage
+
+FlowName2
+Start                InitialStage2
+Options
+    Name2
+    Decision2
+End                  EndStage2
